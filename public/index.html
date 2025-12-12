@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SocketLink - Real-Time Chat</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- ============================================================ -->
+  <!-- LOGIN SCREEN -->
+  <!-- ============================================================ -->
+  <div id="loginScreen" class="screen">
+    <div class="login-container">
+      <h1>🔗 SocketLink</h1>
+      <p class="subtitle">Real-Time Communication Platform</p>
+
+      <!-- Login Tab -->
+      <div id="loginTab" class="auth-tab active">
+        <h2>Login</h2>
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="loginUsername">Username</label>
+            <input
+              type="text"
+              id="loginUsername"
+              placeholder="Enter your username"
+              required
+              autocomplete="username"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <input
+              type="password"
+              id="loginPassword"
+              placeholder="Enter your password"
+              required
+              autocomplete="current-password"
+            >
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">Login</button>
+        </form>
+
+        <p class="switch-auth">
+          Don't have an account?
+          <a href="#" id="showRegister">Register here</a>
+        </p>
+      </div>
+
+      <!-- Register Tab -->
+      <div id="registerTab" class="auth-tab">
+        <h2>Register</h2>
+        <form id="registerForm">
+          <div class="form-group">
+            <label for="registerUsername">Username</label>
+            <input
+              type="text"
+              id="registerUsername"
+              placeholder="Choose a username (min 3 characters)"
+              required
+              minlength="3"
+              autocomplete="username"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="registerPassword">Password</label>
+            <input
+              type="password"
+              id="registerPassword"
+              placeholder="Choose a password (min 6 characters)"
+              required
+              minlength="6"
+              autocomplete="new-password"
+            >
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">Register</button>
+        </form>
+
+        <p class="switch-auth">
+          Already have an account?
+          <a href="#" id="showLogin">Login here</a>
+        </p>
+      </div>
+
+      <div id="authError" class="error-message"></div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- MAIN CHAT INTERFACE -->
+  <!-- ============================================================ -->
+  <div id="chatScreen" class="screen hidden">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-left">
+        <h1>🔗 SocketLink</h1>
+      </div>
+      <div class="header-right">
+        <span id="currentUsername" class="username-badge"></span>
+        <button id="logoutBtn" class="btn btn-small btn-secondary">Logout</button>
+      </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="app-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-section">
+          <h3>Create Room</h3>
+          <form id="createRoomForm" class="room-form">
+            <input
+              type="text"
+              id="newRoomInput"
+              placeholder="Room name..."
+              required
+            >
+            <button type="submit" class="btn btn-primary btn-small">Create</button>
+          </form>
+        </div>
+
+        <div class="sidebar-section">
+          <h3>Rooms</h3>
+          <div id="roomsList" class="rooms-list">
+            <p class="empty-state">No rooms yet. Create one!</p>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <h3>Connection</h3>
+          <div id="connectionStatus" class="status-badge status-disconnected">
+            Disconnected
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Chat Area -->
+      <main class="chat-main">
+        <!-- Room Header -->
+        <div class="chat-header">
+          <div>
+            <h2 id="currentRoomName">Select a room to start chatting</h2>
+            <p id="roomUsers" class="room-meta"></p>
+          </div>
+          <button id="leaveRoomBtn" class="btn btn-secondary btn-small hidden">
+            Leave Room
+          </button>
+        </div>
+
+        <!-- Messages Area -->
+        <div id="messagesContainer" class="messages-container">
+          <div class="empty-state-large">
+            <h3>👋 Welcome to SocketLink!</h3>
+            <p>Create or join a room to start chatting</p>
+          </div>
+        </div>
+
+        <!-- Typing Indicator -->
+        <div id="typingIndicator" class="typing-indicator hidden">
+          <span class="typing-text"></span>
+        </div>
+
+        <!-- Message Input -->
+        <div class="message-input-container">
+          <form id="messageForm">
+            <input
+              type="text"
+              id="messageInput"
+              placeholder="Select a room to send messages..."
+              disabled
+              maxlength="1000"
+            >
+            <button type="submit" id="sendBtn" class="btn btn-primary" disabled>
+              Send
+            </button>
+          </form>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Socket.IO Client Library -->
+  <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"></script>
+
+  <!-- Our Client-Side JavaScript -->
+  <script src="client.js"></script>
+</body>
+</html>
