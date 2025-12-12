@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(copy .env.example .env)",
+      "Bash(ls:*)",
+      "Bash(npm start)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git remote add:*)",
+      "Bash(git branch:*)",
+      "Bash(git push:*)",
+      "Bash(git rm:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
